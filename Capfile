@@ -4,8 +4,11 @@ require 'capistrano/setup'
 # Includes default deployment tasks
 require 'capistrano/deploy'
 
-require 'capistrano/rails'
-require 'capistrano/puma'
+
+require "capistrano/bundler"
+require "capistrano/rails/assets"
+require "capistrano/rails/migrations"
+
 require 'capistrano/rbenv'
 
 set :rbenv_type, :user
@@ -28,6 +31,12 @@ set :rbenv_ruby, '2.5.3'
 # require 'capistrano/bundler'
 # require 'capistrano/rails/assets'
 # require 'capistrano/rails/migrations'
+
+require "capistrano/scm/git"
+install_plugin Capistrano::SCM::Git
+
+require 'capistrano/puma'
+install_plugin Capistrano::Puma
 
 # Loads custom tasks from `lib/capistrano/tasks' if you have any defined.
 Dir.glob('lib/capistrano/tasks/*.cap').each { |r| import r }

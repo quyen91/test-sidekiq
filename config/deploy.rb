@@ -1,5 +1,5 @@
 # config valid only for Capistrano 3.1
-lock '3.1.0'
+lock '3.14.1'
 
 set :application, 'test_sidekiq'
 set :repo_url, 'git@github.com:quyen91/test-sidekiq.git'
@@ -8,9 +8,12 @@ set :repo_url, 'git@github.com:quyen91/test-sidekiq.git'
 set :deploy_to, "/home/deploy/#{fetch :application}"
 
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', '.bundle', 'public/system', 'public/uploads'
+append :linked_files, 'config/database.yml', 'config/master.key'
 
 # Only keep the last 5 releases to save disk space
 set :keep_releases, 5
+
+set :puma_bind,       "unix://#{shared_path}/tmp/sockets/#{fetch(:application)}-puma.sock"
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
