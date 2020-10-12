@@ -1,0 +1,7 @@
+:verbose: true
+:concurrency: <%= ENV.fetch("SIDEKIQ_MAX_THREADS") { 25 } %>
+:timeout: 30
+:queues:
+  - [mailers, 1]
+  - [default, 2]
+  - [low_priority, 3]
